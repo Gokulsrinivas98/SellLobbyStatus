@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const client = new Discord. Client();
-//const prefix = '-';
+const prefix = '-';
 //const fs =require('fs');
 //client.commands = new Discord.Collection();
 //const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -16,15 +16,13 @@ client.once('ready', () => {
 
 client.on('message', message =>{
     //if (!message.content.startsWith(prefix) || message.author.bot) return;
-    //const args = message.content.slice(prefix.length).split(/ +/);
-    //const command = args.shift().toLowerCase();
-    let prefix='-';
-    let command = messageArray[0];
-    let args = MessageArray.slice[0];
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+    
     let msga = message.author;
     let msgai=message.author.id;
     let SellRoleObject = message.guild.roles.cache.find(r=> r.name === 'Sell');
-    if(command === `${prefix}sellon`){
+    if(command === 'sellon'){
         message.channel.setName(`🟢┋sell-lobby`)
             .catch(console.error);
         
@@ -32,7 +30,7 @@ client.on('message', message =>{
         message.delete();
         
     }
-    else if (command === `${prefix}selloff`){
+    else if (command === 'selloff'){
         message.channel.setName(`🔴┋sell-lobby`)
             .catch(console.error);
         async function clear() {
@@ -45,11 +43,11 @@ client.on('message', message =>{
         clear();
             
         
-    }else if(command === `${prefix}ping`){
+    }else if(command === 'ping'){
         message.channel.send('pong!')
         message.channel.send(`${msga} is playing ping pong ${SellRoleObject}`);
         message.delete();
-    }else if (command === `${prefix}help`){
+    }else if (command === 'help'){
         
         const exampleEmbed = new Discord.MessageEmbed()
 	        .setColor('#0099ff')
