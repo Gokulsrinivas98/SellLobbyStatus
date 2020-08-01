@@ -13,26 +13,53 @@ const prefix = '-';
 client.once('ready', () => {
     console.log('Ad is online!');
 });
-
+let arr=[ ];
+let n=0;
 client.on('message', message =>{
-    //if (!message.content.startsWith(prefix) || message.author.bot) return;
-    const args = message.content.slice(prefix.length).split(/ +/);
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     
     let msga = message.author;
     let msgai=message.author.id;
+    
     let SellRoleObject = message.guild.roles.cache.find(r=> r.name === 'Sell');
+    
     if(command === 'sellon'){
+        arr.push(msgai);
+        
+        
         message.channel.setName(`🟢┋sell-lobby`)
             .catch(console.error);
         
-        message.channel.send(`${msga} is hosting a ${SellRoleObject} lobby`);
+        message.channel.send(`${msga} is h00sting a ${SellRoleObject} lobby`);
         message.delete();
+               
+    }
+    else if (command === 'array'){message.channel.send(arr).catch(error => message.reply(`Couldn't display array because of: ${error}`));;}
+    else if (command === 'host'){
         
+        let men= message.mentions.users.first().id
+        
+        if(arr.indexOf(men)!==-1){
+            
+            arr.splice(arr.indexOf(men), 1);
+            
+            arr.push(msgai);
+            
+            message.channel.messages.fetch({ limit: 98 }).then(fetchedMessages => {
+                const messagesToDelete = fetchedMessages.filter(msg => (msg.author.id === '737355306350149676' && msg.content.includes(`${'<@'+men+'>'}`,` ${SellRoleObject} lobby`)));
+                return message.channel.bulkDelete(messagesToDelete, true);    }).catch(console.error);
+            message.channel.send(`${msga} is h00sting ${'<@'+men+'>'}'s ${SellRoleObject} lobby`).catch(console.error);
+            message.delete();}
+        else{message.channel.send(`${'<@'+men+'>'} is not hosting a lobby`).then(sentMessage => {
+            sentMessage.delete({ timeout: 5000 });});
+            message.delete({ timeout: 5000 })}
     }
     else if (command === 'selloff'){
         message.channel.setName(`🔴┋sell-lobby`)
             .catch(console.error);
+         
         async function clear() {
             message.delete();
             const fetched = await message.channel.messages.fetch({limit: 99});
@@ -40,13 +67,10 @@ client.on('message', message =>{
             message.channel.bulkDelete(notPinned,true)
                 .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
             }
+        arr.length=0;      
         clear();
             
         
-    }else if(command === 'ping'){
-        message.channel.send('pong!')
-        message.channel.send(`${msga} is playing ping pong ${SellRoleObject}`);
-        message.delete();
     }else if (command === 'help'){
         
         const exampleEmbed = new Discord.MessageEmbed()
@@ -61,12 +85,13 @@ client.on('message', message =>{
                 //{ name: '\u200B', value: '\u200B' },
                 
 		        { name: 'Hey! Hope this helps you.\n\n Sell Commands:\n\n📍 -sellon', value: 'Pings members with @Sell role and changes the red dot into green',  },
-		        { name: '📍 -selloff', value: 'Reverts back the green dot to red and clears the channel'},
+                { name: '📍 -selloff', value: 'Reverts back the green dot to red and clears the channel'},
+                {name : '📍 -host @existing host' , value:'Replaces the old host with the new host '}
 	)
 	        //.addField('Inline field title', 'Some value here', true)
 	        
 	        .setTimestamp()
-	        .setAuthor('Adroxxus','https://cdn.discordapp.com/embed/avatars/0.png','https://discord.com/channels/@me/609596548619304992')
+	        .setAuthor('Adroxxus','https://cdn.discordapp.com/embed/avatars/0.png','https://discord.com/channels/@me/738806953714647153')
 
         message.channel.send(exampleEmbed);
         message.delete();
