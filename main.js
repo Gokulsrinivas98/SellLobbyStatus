@@ -36,7 +36,7 @@ client.on('message', message =>{
         message.delete();
                
     }
-    else if (command === 'array'){message.channel.send(arr).catch(error => message.reply(`Couldn't display array because of: ${error}`));;}
+    
     else if (command === 'host'){
         
         let men= message.mentions.users.first().id
@@ -46,12 +46,12 @@ client.on('message', message =>{
             arr.splice(arr.indexOf(men), 1);
             
             arr.push(msgai);
-            
+            message.delete();
             message.channel.messages.fetch({ limit: 98 }).then(fetchedMessages => {
                 const messagesToDelete = fetchedMessages.filter(msg => (msg.author.id === '737355306350149676' && msg.content.includes(`${'<@'+men+'>'}`,` ${SellRoleObject} lobby`)));
                 return message.channel.bulkDelete(messagesToDelete, true);    }).catch(console.error);
             message.channel.send(`${msga} is hosting ${'<@'+men+'>'}'s ${SellRoleObject} lobby`).catch(console.error);
-            message.delete();}
+            }
         else{message.channel.send(`${'<@'+men+'>'} is not hosting a lobby`).then(sentMessage => {
             sentMessage.delete({ timeout: 5000 });});
             message.delete({ timeout: 5000 })}
