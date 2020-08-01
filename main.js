@@ -32,7 +32,7 @@ client.on('message', message =>{
         message.channel.setName(`🟢┋sell-lobby`)
             .catch(console.error);
         
-        message.channel.send(`${msga} is h00sting a ${SellRoleObject} lobby`);
+        message.channel.send(`${msga} is hosting a ${SellRoleObject} lobby`);
         message.delete();
                
     }
@@ -50,7 +50,7 @@ client.on('message', message =>{
             message.channel.messages.fetch({ limit: 98 }).then(fetchedMessages => {
                 const messagesToDelete = fetchedMessages.filter(msg => (msg.author.id === '737355306350149676' && msg.content.includes(`${'<@'+men+'>'}`,` ${SellRoleObject} lobby`)));
                 return message.channel.bulkDelete(messagesToDelete, true);    }).catch(console.error);
-            message.channel.send(`${msga} is h00sting ${'<@'+men+'>'}'s ${SellRoleObject} lobby`).catch(console.error);
+            message.channel.send(`${msga} is hosting ${'<@'+men+'>'}'s ${SellRoleObject} lobby`).catch(console.error);
             message.delete();}
         else{message.channel.send(`${'<@'+men+'>'} is not hosting a lobby`).then(sentMessage => {
             sentMessage.delete({ timeout: 5000 });});
