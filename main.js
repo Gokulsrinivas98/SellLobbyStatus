@@ -37,5 +37,5 @@ client.on('message', message =>{
     if (command === 'help'){
         client.commands.get('help').execute(message,args);      
 }});
-client.login('NzM3MzU1MzA2MzUwMTQ5Njc2.Xx8JpA.Fel9oGj1M7pLd5sGHOlsjp859Ws');
+client.login(' '); //key
 // client.login(process.env.token);
